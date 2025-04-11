@@ -2,7 +2,7 @@ import json
 import pandas as pd
 
 # 读取包含目标数据的JSON文件
-df = pd.read_json('/data/CaiZhuaoXiao/yelp/PAA/PA_checkin.json', lines=True)
+df = pd.read_json('/data/yelp/PA/PA_checkin.json', lines=True)
 
 # 获取所有的unique business_id
 unique_business_ids = df['business_id'].unique()
