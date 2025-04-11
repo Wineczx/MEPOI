@@ -456,10 +456,7 @@ def train(args):
                     sample_idx = 0
                     logging.info(f'Epoch:{epoch}, batch:{b_idx}, '
                                 f'train_batch_loss:{loss.item():.2f}, '
-                                f'train_batch_top1_acc:{top1_acc / len(batch_label_pois):.2f}, '
                                 f'train_move_loss:{np.mean(train_batches_loss_list):.2f}\n'
-                                f'train_move_poi_loss:{np.mean(train_batches_poi_loss_list):.2f}\n'
-                                f'train_move_geo_loss:{np.mean(train_batches_geo_loss_list):.2f}\n'
                                 f'train_move_top1_acc:{np.mean(train_batches_top1_acc_list):.4f}\n'
                                 f'train_move_top5_acc:{np.mean(train_batches_top5_acc_list):.4f}\n'
                                 f'train_move_top10_acc:{np.mean(train_batches_top10_acc_list):.4f}\n'
@@ -657,10 +654,6 @@ def train(args):
                                 f'train_batch_loss:{loss.item():.2f}, '
                                 f'train_batch_top1_acc:{top1_acc / len(batch_label_pois):.2f}, '
                                 f'train_move_loss:{np.mean(train_batches_loss_list):.2f}\n'
-                                f'train_move_poi_loss:{np.mean(train_batches_poi_loss_list):.2f}\n'
-                                f'train_move_geo_loss:{np.mean(train_batches_geo_loss_list):.2f}\n'
-                                f'train_move_text_loss:{np.mean(train_batches_text_loss_list):.2f}\n'
-                                f'train_move_photo_loss:{np.mean(train_batches_photo_loss_list):.2f}\n'
                                 f'train_move_top1_acc:{np.mean(train_batches_top1_acc_list):.4f}\n'
                                 f'train_move_top5_acc:{np.mean(train_batches_top5_acc_list):.4f}\n'
                                 f'train_move_top10_acc:{np.mean(train_batches_top10_acc_list):.4f}\n'
@@ -885,12 +878,6 @@ def train(args):
                     sample_idx = 0
                     logging.info(f'Epoch:{epoch}, batch:{vb_idx}, '
                                 f'val_batch_loss:{loss.item():.2f}, '
-                                f'val_batch_top1_acc:{top1_acc / len(batch_label_pois):.2f}, '
-                                f'val_move_loss:{np.mean(val_batches_loss_list):.2f} \n'
-                                f'val_move_poi_loss:{np.mean(val_batches_poi_loss_list):.2f} \n'
-                                f'val_move_geo_loss:{np.mean(val_batches_geo_loss_list):.2f} \n'
-                                f'val_move_text_loss:{np.mean(val_batches_text_loss_list):.2f} \n'
-                                f'val_move_photo_loss:{np.mean(val_batches_photo_loss_list):.2f} \n'
                                 f'val_move_top1_acc:{np.mean(val_batches_top1_acc_list):.4f} \n'
                                 f'val_move_top5_acc:{np.mean(val_batches_top5_acc_list):.4f} \n'
                                 f'val_move_top10_acc:{np.mean(val_batches_top10_acc_list):.4f} \n'
@@ -972,10 +959,6 @@ def train(args):
             # Print epoch results
             logging.info(f"Epoch {epoch}/{args.epochs}\n"
                         f"train_loss:{epoch_train_loss:.4f}, "
-                        f"train_poi_loss:{epoch_train_poi_loss:.4f}, "
-                        f"train_geo_loss:{epoch_train_geo_loss:.4f}, "
-                        f"train_text_loss:{epoch_train_text_loss:.4f}, "
-                        f"train_photo_loss:{epoch_train_photo_loss:.4f}, "
                         f"train_top1_acc:{epoch_train_top1_acc:.4f}, "
                         f"train_top5_acc:{epoch_train_top5_acc:.4f}, "
                         f"train_top10_acc:{epoch_train_top10_acc:.4f}, "
@@ -984,10 +967,6 @@ def train(args):
                         f"train_ndcg20:{epoch_train_ndcg20:.4f}, "
                         f"train_mrr:{epoch_train_mrr:.4f}\n"
                         f"val_loss: {epoch_val_loss:.4f}, "
-                        f"val_poi_loss: {epoch_val_poi_loss:.4f}, "
-                        f"val_geo_loss: {epoch_val_geo_loss:.4f}, "
-                        f"val_text_loss: {epoch_val_text_loss:.4f}, "
-                        f"val_photo_loss: {epoch_val_photo_loss:.4f}, "
                         f"val_top1_acc:{epoch_val_top1_acc:.4f}, "
                         f"val_top5_acc:{epoch_val_top5_acc:.4f}, "
                         f"val_top10_acc:{epoch_val_top10_acc:.4f}, "
@@ -1029,7 +1008,6 @@ def train(args):
                     },
                     'epoch_val_metrics': {
                         'epoch_val_loss': epoch_val_loss,
-                        'epoch_val_poi_loss': epoch_val_poi_loss,
                         'epoch_val_top1_acc': epoch_val_top1_acc,
                         'epoch_val_top5_acc': epoch_val_top5_acc,
                         'epoch_val_top10_acc': epoch_val_top10_acc,
@@ -1037,8 +1015,6 @@ def train(args):
                         'epoch_val_mAP20': epoch_val_mAP20,
                         'epoch_val_ndcg20': epoch_val_ndcg20,
                         'epoch_val_mrr': epoch_val_mrr,
-                        'epoch_photo_loss': epoch_val_photo_loss,
-                        'epoch_text_loss': epoch_val_text_loss,
                     }
                 }
                 model_save_dir = os.path.join(args.save_dir, 'checkpoints')
@@ -1064,10 +1040,6 @@ def train(args):
             # Save train/val metrics for plotting purpose
             with open(os.path.join(args.save_dir, 'metrics-train.txt'), "w") as f:
                 print(f'train_epochs_loss_list={[float(f"{each:.4f}") for each in train_epochs_loss_list]}', file=f)
-                print(f'train_epochs_poi_loss_list={[float(f"{each:.4f}") for each in train_epochs_poi_loss_list]}', file=f)
-                print(f'train_epochs_geo_loss_list={[float(f"{each:.4f}") for each in train_epochs_geo_loss_list]}', file=f)
-                print(f'train_epochs_text_loss_list={[float(f"{each:.4f}") for each in train_epochs_text_loss_list]}', file=f)
-                print(f'train_epochs_photo_loss_list={[float(f"{each:.4f}") for each in train_epochs_photo_loss_list]}', file=f)
                 print(f'train_epochs_top1_acc_list={[float(f"{each:.4f}") for each in train_epochs_top1_acc_list]}', file=f)
                 print(f'train_epochs_top5_acc_list={[float(f"{each:.4f}") for each in train_epochs_top5_acc_list]}', file=f)
                 print(f'train_epochs_top10_acc_list={[float(f"{each:.4f}") for each in train_epochs_top10_acc_list]}',
@@ -1079,10 +1051,6 @@ def train(args):
                 print(f'train_epochs_mrr_list={[float(f"{each:.4f}") for each in train_epochs_mrr_list]}', file=f)
             with open(os.path.join(args.save_dir, 'metrics-val.txt'), "w") as f:
                 print(f'val_epochs_loss_list={[float(f"{each:.4f}") for each in val_epochs_loss_list]}', file=f)
-                print(f'val_epochs_poi_loss_list={[float(f"{each:.4f}") for each in val_epochs_poi_loss_list]}', file=f)
-                print(f'val_epochs_geo_loss_list={[float(f"{each:.4f}") for each in val_epochs_geo_loss_list]}', file=f)
-                print(f'val_epochs_text_loss_list={[float(f"{each:.4f}") for each in val_epochs_text_loss_list]}', file=f)
-                print(f'val_epochs_photo_loss_list={[float(f"{each:.4f}") for each in val_epochs_photo_loss_list]}', file=f)
                 print(f'val_epochs_top1_acc_list={[float(f"{each:.4f}") for each in val_epochs_top1_acc_list]}', file=f)
                 print(f'val_epochs_top5_acc_list={[float(f"{each:.4f}") for each in val_epochs_top5_acc_list]}', file=f)
                 print(f'val_epochs_top10_acc_list={[float(f"{each:.4f}") for each in val_epochs_top10_acc_list]}', file=f)
@@ -1134,10 +1102,6 @@ def test(args):
     test_batches_ndcg20_list = []
     test_batches_mrr_list = []
     test_batches_loss_list = []
-    test_batches_poi_loss_list = []
-    test_batches_geo_loss_list = []
-    test_batches_text_loss_list = []
-    test_batches_photo_loss_list = []
     test_batches_text_BLEU1_list=[]
     test_batches_text_BLEU4_list=[]   
     src_mask = seq_model.generate_square_subsequent_mask(args.batch).to(args.device)
@@ -1290,7 +1254,6 @@ def test(args):
         for (k, v) in ROUGE.items():
             print(now_time() + '{} {:7.4f}'.format(k, v))
 
-        test_batches_text_loss_list.append(t_loss.detach().cpu().numpy())
         test_batches_text_BLEU1_list.append(BLEU1)
         test_batches_text_BLEU4_list.append(BLEU4)
         # Performance measurement
@@ -1321,21 +1284,12 @@ def test(args):
         test_batches_ndcg20_list.append(ndcg20 / len(batch_label_pois))
         test_batches_mrr_list.append(mrr / len(batch_label_pois))
         test_batches_loss_list.append(loss.detach().cpu().numpy())
-        test_batches_poi_loss_list.append(loss_poi.detach().cpu().numpy())
-        test_batches_geo_loss_list.append(loss_geo.detach().cpu().numpy())
-        test_batches_text_loss_list.append(t_loss.detach().cpu().numpy())
-        test_batches_photo_loss_list.append(v_loss.detach().cpu().numpy())
         # Report validation progress
         if (vb_idx % (args.batch * 5)) == 0:
             sample_idx = 0
             logging.info(f' batch:{vb_idx}, '
                             f'test_batch_loss:{loss.item():.2f}, '
                             f'test_batch_top1_acc:{top1_acc / len(batch_label_pois):.2f}, '
-                            f'test_move_loss:{np.mean(test_batches_loss_list):.2f} \n'
-                            f'test_move_poi_loss:{np.mean(test_batches_poi_loss_list):.2f} \n'
-                            f'test_move_geo_loss:{np.mean(test_batches_geo_loss_list):.2f} \n'
-                            f'test_move_text_loss:{np.mean(test_batches_text_loss_list):.2f} \n'
-                            f'test_move_photo_loss:{np.mean(test_batches_photo_loss_list):.2f} \n'
                             f'test_move_top1_acc:{np.mean(test_batches_top1_acc_list):.4f} \n'
                             f'test_move_top5_acc:{np.mean(test_batches_top5_acc_list):.4f} \n'
                             f'test_move_top10_acc:{np.mean(test_batches_top10_acc_list):.4f} \n' 
@@ -1364,18 +1318,10 @@ def test(args):
     epoch_test_ndcg20 = np.mean(test_batches_ndcg20_list)
     epoch_test_mrr = np.mean(test_batches_mrr_list)
     epoch_test_loss = np.mean(test_batches_loss_list)
-    epoch_test_poi_loss = np.mean(test_batches_poi_loss_list)
-    epoch_test_geo_loss = np.mean(test_batches_geo_loss_list)
     epoch_test_BLEU1_loss = np.mean(test_batches_text_BLEU1_list)
     epoch_test_BLEU4_loss = np.mean(test_batches_text_BLEU4_list)
-    epoch_test_text_loss = np.mean(test_batches_text_loss_list)
-    epoch_test_photo_loss = np.mean(test_batches_photo_loss_list)
     # Save metrics to list
     test_epochs_loss_list.append(epoch_test_loss)
-    test_epochs_poi_loss_list.append(epoch_test_poi_loss)
-    test_epochs_geo_loss_list.append(epoch_test_geo_loss)
-    test_epochs_text_loss_list.append(epoch_test_text_loss)
-    test_epochs_photo_loss_list.append(epoch_test_photo_loss)
     test_epochs_text_BLEU1_list.append(epoch_test_BLEU1_loss)
     test_epochs_text_BLEU4_list.append(epoch_test_BLEU4_loss)
     test_epochs_top1_acc_list.append(epoch_test_top1_acc)
@@ -1390,10 +1336,6 @@ def test(args):
 
     with open(os.path.join(args.save_dir, 'metrics-test.txt'), "w") as f:
         print(f'test_epochs_loss_list={[float(f"{each:.4f}") for each in test_epochs_loss_list]}', file=f)
-        print(f'test_epochs_poi_loss_list={[float(f"{each:.4f}") for each in test_epochs_poi_loss_list]}', file=f)
-        print(f'test_epochs_geo_loss_list={[float(f"{each:.4f}") for each in test_epochs_geo_loss_list]}', file=f)
-        print(f'test_epochs_text_loss_list={[float(f"{each:.4f}") for each in test_epochs_text_loss_list]}', file=f)
-        print(f'test_epochs_photo_loss_list={[float(f"{each:.4f}") for each in test_epochs_photo_loss_list]}', file=f)
         print(f'test_epochs_text_BLEU1_list={float(f"{BLEU1:.4f}")}', file=f)
         print(f'test_epochs_text_BLEU4_list={float(f"{BLEU4:.4f}")}', file=f)
         print(f'test_epochs_top1_acc_list={[float(f"{each:.4f}") for each in test_epochs_top1_acc_list]}', file=f)
