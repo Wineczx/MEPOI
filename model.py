@@ -455,63 +455,6 @@ class MLP(nn.Module):
         out = self.relu(out)
         out = self.linear2(out)
         return out
-# class SelectAndLoss(nn.Module):
-#     def __init__(self, input_dim, hidden_dim,output_dim,nuser,args):
-#         super(SelectAndLoss, self).__init__()
-#         self.mlp = MLP(input_dim,hidden_dim, output_dim)
-#         emsize = 768  # 768
-#         self.user = nn.Embedding(nuser, emsize)
-#         # 实例化 SentenceTransformer 模型
-#         model_name = "/database/zhanghuaxiang/xuyang/xuyang/explain/all-mpnet-base-v2"
-#         self.encoderModel = SentenceTransformer(model_name).to(args.device)
-#         # 冻结预训练模型的参数
-#         for param in self.encoderModel.parameters():
-#             param.requires_grad = False
-#         initrange = 0.1
-#         self.user.weight.data.uniform_(-initrange, initrange)
-
-#     def forward(self, user_embedding, candidate_texts, target_text):
-#         def cosine_similarity(a, b, dim=-1):
-#             a_n = F.normalize(a, p=2, dim=dim)
-#             b_n = F.normalize(b, p=2, dim=dim)
-#             return (a_n * b_n).sum(dim=dim)
-#         # user_embedding_transformed = self.mlp(user_embedding)
-#         user_embedding_transformed = self.user(user_embedding)
-
-#         # 存储每一批中的所有候选嵌入
-#         batch_candidate_embeddings = []
-#         for candidate_list in candidate_texts:
-#             candidate_embeddings = torch.tensor(self.encoderModel.encode(candidate_list, show_progress_bar=False)).to(user_embedding.device)
-
-#             batch_candidate_embeddings.append(candidate_embeddings)
-
-#         target_embedding = torch.tensor(self.encoderModel.encode(target_text, show_progress_bar=False)).to(user_embedding.device)
-#         # 存储在每一批次的候选列表中找到的最佳候选项
-#         selected_text_per_batch = []
-#         selected_embed_per_batch = []
-
-#         # 为每个批次寻找最相似的候选项
-#         for us_emb, candid_emb, candid_text in zip(user_embedding_transformed, batch_candidate_embeddings, candidate_texts):
-#             # 计算当前批次的嵌入与候选嵌入的余弦相似度
-#             sim = cosine_similarity(us_emb[None, :], candid_emb, dim=-1)
-            
-#             selected_idx = sim.argmax().item()
-
-#             selected_text_per_batch.append(candid_text[selected_idx])
-#             selected_embed_per_batch.append(candid_emb[selected_idx])
-
-#         selected_embeddings = torch.stack(selected_embed_per_batch)
-#         selected_text = selected_text_per_batch
-
-#         # loss = 1 - cosine_similarity(selected_embeddings, target_embedding)
-#         # loss = loss.mean()
-        
-#         target_embedding = target_embedding.squeeze(0)
-#         cos = nn.CosineSimilarity(dim=1, eps=1e-6)
-#         cos_sim = cos(selected_embeddings, target_embedding)
-#     # 计算负余弦相似度损失
-#         loss = 1 - cos_sim.mean()
-#         return  selected_text,loss
 class SelectAndLoss(nn.Module):
     def __init__(self, input_dim, hidden_dim,output_dim,nuser,args):
         super(SelectAndLoss, self).__init__()
@@ -519,7 +462,7 @@ class SelectAndLoss(nn.Module):
         emsize = 768  # 768
         self.user = nn.Embedding(nuser, emsize)
         # 实例化 SentenceTransformer 模型
-        model_name = "/database/zhanghuaxiang/xuyang/xuyang/explain/all-mpnet-base-v2"
+        model_name = "all-mpnet-base-v2"
         self.encoderModel = SentenceTransformer(model_name).to(args.device)
         # 冻结预训练模型的参数
         for param in self.encoderModel.parameters():
