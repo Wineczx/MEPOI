@@ -6,8 +6,8 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
 
 # 载入分词器和模型
-tokenizer = AutoTokenizer.from_pretrained("/data/CaiZhuaoXiao/flan-alpaca-xl")
-model = AutoModelForSeq2SeqLM.from_pretrained("/data/CaiZhuaoXiao/flan-alpaca-xl").to(device)
+tokenizer = AutoTokenizer.from_pretrained("/data/flan-alpaca-xl")
+model = AutoModelForSeq2SeqLM.from_pretrained("/data/flan-alpaca-xl").to(device)
 
 # 统计文本的单词数量
 def word_count(text):
@@ -29,21 +29,21 @@ def generate_summary(texts):
 
 # 尝试读取已处理的review_id，如果不存在则继续
 # try:
-#     processed_df = pd.read_json('/data/CaiZhuaoXiao/yelp/FL/FL_reviews_summary.json', lines=True)
+#     processed_df = pd.read_json('/data/yelp/FL/FL_reviews_summary.json', lines=True)
 #     processed_ids = set(processed_df['review_id'].tolist())
 # except (ValueError, FileNotFoundError):
 #     processed_ids = set()
 processed_ids = set()
 
 # 读取原始数据集
-df = pd.read_json('/data/CaiZhuaoXiao/yelp/PAA/image_description.json', lines=True)
+df = pd.read_json('/data/yelp/PA/image_description.json', lines=True)
 
 batch_size = 20
 num_samples = len(df['text'])
 
 # 开始生成摘要并将它们添加到数据集
 # Start generating summaries and adding them to the dataset
-with open('/data/CaiZhuaoXiao/yelp/PAA/PA_photostoreview.json', 'a') as outfile:
+with open('/data/yelp/PAA/PA_photostoreview.json', 'a') as outfile:
     for i in tqdm(range(0, num_samples, batch_size), position=0, leave=True):
         # Select the batch with a copy to avoid SettingWithCopyWarning
         batch_df = df.iloc[i:i + batch_size].copy()
