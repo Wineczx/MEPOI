@@ -299,7 +299,7 @@ def get_poi_id_set(file_path) -> set:
 if __name__ == '__main__':
     # paremeters
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset_path', type=str, default='/data/CaiZhuaoXiao/', help='the path of the dataset')
+    parser.add_argument('--dataset_path', type=str, default='/data/', help='the path of the dataset')
     parser.add_argument('--region', type=str, default='', help='the region name of datasets(e.g. California)')
     parser.add_argument('--gpu_index', type=str, default='2', help='the index of cuda')
     args, _ = parser.parse_known_args()
@@ -308,24 +308,24 @@ if __name__ == '__main__':
 
     # model_name = "declare-lab/flan-alpaca-xl"
     # encoderModel = CustomPipeline(model_name, args.gpu_index)
-    model_name = "/data/CaiZhuaoXiao/all-mpnet-base-v2"
+    model_name = "all-mpnet-base-v2"
     encoderModel = SentenceTransformerModel(model_name, args.gpu_index)
 
     # 加载poi_id的set集合，用于填充0向量
-    meta_file_path = os.path.join(parent_path, '/data/CaiZhuaoXiao/yelp/PAA/PA_business_core.json')
+    meta_file_path = os.path.join(parent_path, '/data/yelp/PA/PA_business_core.json')
     poi_id_set = get_poi_id_set(meta_file_path)
 
     # 处理pois_description.json，对其做嵌入
-    pois_description_file_path = os.path.join(parent_path, '/data/CaiZhuaoXiao/yelp/PAA/PA_categories.json')
-    modal_meta_embedding_file_path = os.path.join(parent_path, '/data/CaiZhuaoXiao/yelp/PAA/modal_cate_embedding.json')
+    pois_description_file_path = os.path.join(parent_path, '/data/yelp/PA/PA_categories.json')
+    modal_meta_embedding_file_path = os.path.join(parent_path, '/data/yelp/PA/modal_cate_embedding.json')
     embed_4_modal_review_summary(pois_description_file_path, modal_meta_embedding_file_path,args.gpu_index)
 
     # 处理image_description.json，对其做嵌入
-    image_description_file_path = os.path.join(parent_path, '/data/CaiZhuaoXiao/yelp/PAA/image2review.json')
-    modal_image_embedding_file_path = os.path.join(parent_path, '/data/CaiZhuaoXiao/yelp/PAA/modal_image_embedding.json')
+    image_description_file_path = os.path.join(parent_path, '/data/yelp/PA/image2review.json')
+    modal_image_embedding_file_path = os.path.join(parent_path, '/data/yelp/PA/modal_image_embedding.json')
     embed_4_modal_image(image_description_file_path, modal_image_embedding_file_path, args.gpu_index)
 
     # 处理review_summary.json，对其做嵌入
-    review_summary_file_path = os.path.join(parent_path, '/data/CaiZhuaoXiao/yelp/PAA/review_summary.json')
-    modal_review_summary_embedding_file_path = os.path.join(parent_path, '/data/CaiZhuaoXiao/yelp/PAA/modal_review_summary_embedding.json')
+    review_summary_file_path = os.path.join(parent_path, '/data/yelp/PA/review_summary.json')
+    modal_review_summary_embedding_file_path = os.path.join(parent_path, '/data/yelp/PA/modal_review_summary_embedding.json')
     embed_4_modal_review_summary(review_summary_file_path, modal_review_summary_embedding_file_path, args.gpu_index)
