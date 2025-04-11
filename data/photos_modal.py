@@ -2,8 +2,8 @@ import json
 
 # Read the original JSON lines file and collect reviews by business_id
 reviews_by_business = {}
-input_filename = '/data/CaiZhuaoXiao/yelp/PAA/PA_photostoreview.json'  # Change this to your input filename
-output_filename = '/data/CaiZhuaoXiao/yelp/PAA/image2review.json'  # Change this to your desired output filename
+input_filename = '/data/yelp/PA/PA_photostoreview.json'  # Change this to your input filename
+output_filename = '/data/yelp/PA/image2review.json'  # Change this to your desired output filename
 
 with open(input_filename, 'r') as input_file:
     for line in input_file:
