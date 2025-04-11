@@ -18,7 +18,7 @@ def sum_norm_embeddings(embeddings: list, gpu_index):
     return normalized_embedding
 # 读取模态数据文件
 modal1_data = []
-with open('/data/CaiZhuaoXiao/yelp/PAA/modal_cate_embedding.json', 'r') as file:
+with open('/data/yelp/PA/modal_cate_embedding.json', 'r') as file:
     for line in file:
         data = json.loads(line)  # 使用 json.loads 函数将字符串解析为字典
         poi_id = list(data.keys())[0]
@@ -27,7 +27,7 @@ with open('/data/CaiZhuaoXiao/yelp/PAA/modal_cate_embedding.json', 'r') as file:
 
 modal1_data = pd.DataFrame(modal1_data)
 modal2_data = []
-with open('/data/CaiZhuaoXiao/yelp/PAA/modal_review_summary_embedding.json', 'r') as file:
+with open('/data/yelp/PA/modal_review_summary_embedding.json', 'r') as file:
     for line in file:
         data = json.loads(line)  # 使用 json.loads 函数将字符串解析为字典
         poi_id = list(data.keys())[0]
@@ -36,7 +36,7 @@ with open('/data/CaiZhuaoXiao/yelp/PAA/modal_review_summary_embedding.json', 'r'
 
 modal2_data = pd.DataFrame(modal2_data)
 modal3_data = []
-with open('/data/CaiZhuaoXiao/yelp/PAA/modal_image_embedding.json', 'r') as file:
+with open('/data/yelp/PA/modal_image_embedding.json', 'r') as file:
     for line in file:
         data = json.loads(line)  # 使用 json.loads 函数将字符串解析为字典
         poi_id = list(data.keys())[0]
@@ -69,4 +69,4 @@ for key in t:
 
 # 将DataFrame保存为CSV文件
 business_features = pd.DataFrame(business_features)
-business_features.to_csv('/data/CaiZhuaoXiao/yelp/PAA/fused_features.csv', index=False)
+business_features.to_csv('/data/yelp/PA/fused_features.csv', index=False)
