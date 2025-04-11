@@ -45,7 +45,7 @@ prediction_path = os.path.join(save_dir, args.outf)
 bos = '<bos>'
 eos = '<eos>'
 pad = '<pad>'
-tokenizer = GPT2Tokenizer.from_pretrained('/database/zhanghuaxiang/xuyang/xuyang/explain/gpt2', bos_token=bos, eos_token=eos, pad_token=pad)
+tokenizer = GPT2Tokenizer.from_pretrained('explain/gpt2', bos_token=bos, eos_token=eos, pad_token=pad)
     # Setup logger
 for handler in logging.root.handlers[:]:
         logging.root.removeHandler(handler)
@@ -204,7 +204,7 @@ seq_model = TransformerModel(num_pois,
                                 dropout=args.transformer_dropout)
 max_val_score = -np.inf
 ntoken = len(tokenizer)
-model = RecReg.from_pretrained('/database/zhanghuaxiang/xuyang/xuyang/explain/gpt2', num_users,num_pois)
+model = RecReg.from_pretrained('explain/gpt2', num_users,num_pois)
 model.resize_token_embeddings(ntoken)  # three tokens added, update embedding table
 # Define overall loss and optimizer
 optimizer1 = Adam(params=list(poi_embed_model.parameters()) +
